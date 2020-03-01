@@ -2,10 +2,10 @@
 *.deb
 *.exe
 src/bitcoin
-src/bitcoinzd
-src/bitcoinz-cli
-src/bitcoinz-gtest
-src/bitcoinz-tx
+src/0cashd
+src/0cash-cli
+src/0cash-gtest
+src/0cash-tx
 src/zcashd
 src/zcash-cli
 src/zcash-gtest

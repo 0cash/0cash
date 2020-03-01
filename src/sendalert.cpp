@@ -1,5 +1,5 @@
-// Copyright (c) 2018-2019 The BitcoinZ Community
-// Copyright (c) 2016-2018 The Zcash developers
+// Copyright (c) 2020 The 0cash Community
+// Copyright (c) 2016-2019 The Zcash developers
 // Original code from: https://gist.github.com/laanwj/0e689cfa37b52bcbbb44
 
 /*
@@ -28,7 +28,7 @@ Modify the alert parameters, id and message found in this file.
 
 Build and run with -sendalert or -printalert.
 
-./bitcoinzd -printtoconsole -sendalert
+./0cashd -printtoconsole -sendalert
 
 One minute after starting up, the alert will be broadcast. It is then
 flooded through the network until the nRelayUntil time, and will be
@@ -91,7 +91,7 @@ void ThreadSendAlert()
     //  4000 or higher will put the RPC into safe mode
     alert.nPriority     = 4000;
     alert.strComment    = "";
-    alert.strStatusBar  = "Your client is out of date and incompatible with the Sapling network upgrade. Please update to a recent version of BitcoinZ (2.0.1 or later).";
+    alert.strStatusBar  = "Your client is out of date and incompatible with the Sapling network upgrade. Please update to a recent version of 0cash (2.0.1 or later).";
     alert.strRPCError   = alert.strStatusBar;
 
     // Set specific client version/versions here. If setSubVer is empty, no filtering on subver is done:

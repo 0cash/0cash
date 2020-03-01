@@ -504,7 +504,7 @@ static bool ProcessBlockFound(CBlock* pblock, const CChainParams& chainparams)
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != chainActive.Tip()->GetBlockHash())
-            return error("BitcoinZMiner: generated block is stale");
+            return error("0cashMiner: generated block is stale");
     }
 
     // Inform about the new block
@@ -513,7 +513,7 @@ static bool ProcessBlockFound(CBlock* pblock, const CChainParams& chainparams)
     // Process this block the same as if we had received it from another node
     CValidationState state;
     if (!ProcessNewBlock(state, NULL, pblock, true, NULL))
-        return error("BitcoinZMiner: ProcessNewBlock, block not accepted");
+        return error("0cashMiner: ProcessNewBlock, block not accepted");
 
     TrackMinedBlock(pblock->GetHash());
 
@@ -522,9 +522,9 @@ static bool ProcessBlockFound(CBlock* pblock, const CChainParams& chainparams)
 
 void static BitcoinMiner(const CChainParams& chainparams)
 {
-    LogPrintf("BitcoinZMiner started\n");
+    LogPrintf("0cashMiner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("bitcoinz-miner");
+    RenameThread("0cash-miner");
 
     // Each thread has its own counter
     unsigned int nExtraNonce = 0;
@@ -577,7 +577,7 @@ void static BitcoinMiner(const CChainParams& chainparams)
             // Get the height of current tip
             int nHeight = chainActive.Height();
             if (nHeight == -1) {
-                LogPrintf("Error in BitcoinZ Miner: chainActive.Height() returned -1\n");
+                LogPrintf("Error in 0cash Miner: chainActive.Height() returned -1\n");
                 return;
             }
 
@@ -593,17 +593,17 @@ void static BitcoinMiner(const CChainParams& chainparams)
             if (!pblocktemplate.get())
             {
                 if (GetArg("-mineraddress", "").empty()) {
-                    LogPrintf("Error in BitcoinZMiner: Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
+                    LogPrintf("Error in 0cashMiner: Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
                 } else {
                     // Should never reach here, because -mineraddress validity is checked in init.cpp
-                    LogPrintf("Error in BitcoinZMiner: Invalid -mineraddress\n");
+                    LogPrintf("Error in 0cashMiner: Invalid -mineraddress\n");
                 }
                 return;
             }
             CBlock *pblock = &pblocktemplate->block;
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-            LogPrintf("Running BitcoinZMiner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
+            LogPrintf("Running 0cashMiner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
                 ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
             //
@@ -650,7 +650,7 @@ void static BitcoinMiner(const CChainParams& chainparams)
 
                     // Found a solution
                     SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                    LogPrintf("BitcoinZMiner:\n");
+                    LogPrintf("0cashMiner:\n");
                     LogPrintf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", pblock->GetHash().GetHex(), hashTarget.GetHex());
                     if (ProcessBlockFound(pblock, chainparams)) {
                         // Ignore chain updates caused by us
@@ -749,14 +749,14 @@ void static BitcoinMiner(const CChainParams& chainparams)
     {
         miningTimer.stop();
         c.disconnect();
-        LogPrintf("BitcoinZMiner terminated\n");
+        LogPrintf("0cashMiner terminated\n");
         throw;
     }
     catch (const std::runtime_error &e)
     {
         miningTimer.stop();
         c.disconnect();
-        LogPrintf("BitcoinZMiner runtime error: %s\n", e.what());
+        LogPrintf("0cashMiner runtime error: %s\n", e.what());
         return;
     }
     miningTimer.stop();

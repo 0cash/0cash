@@ -49,11 +49,11 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  * database (and is in any case of zero value).
  *
  * >>> from pyblake2 import blake2s
- * >>> 'BitcoinZ' + blake2s(b'BitcoinZ - Your Financial Freedom. Dedicated to The Purest Son of Liberty - Thaddeus Kosciuszko. BTC #484410 - 0000000000000000000c6a5f221ebeb77437cbab649d990facd0e42a24ee6231').hexdigest()
+ * >>> '0cash' + blake2s(b'0cash - decentralized electronic cash. BTC#616634 - 00000000000000000007113e79edb30157cf555e802f715bc78631a507e1fdd4').hexdigest()
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, const uint256& nNonce, const std::vector<unsigned char>& nSolution, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "BitcoinZ2beeec1ef52fd18475953563ebdb287f056453f452200581f958711118e980b2";
+    const char* pszTimestamp = "0cashcb05b56932e0e7a51331b4701c80271c3ead3c5ebdf0999f5eeefb967b48eb0a";
     const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nSolution, nBits, nVersion, genesisReward);
 }
@@ -76,7 +76,7 @@ class CMainParams : public CChainParams {
 public:
     CMainParams() {
         strNetworkID = "main";
-        strCurrencyUnits = "BTCZ";
+        strCurrencyUnits = "ZCH";
         bip44CoinType = 177; // As registered in https://github.com/satoshilabs/slips/blob/master/slip-0044.md
         consensus.fCoinbaseMustBeProtected = true;
         consensus.nSubsidySlowStartInterval = 0;
@@ -98,9 +98,9 @@ public:
         consensus.vUpgrades[Consensus::UPGRADE_TESTDUMMY].nActivationHeight =
             Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
         consensus.vUpgrades[Consensus::UPGRADE_OVERWINTER].nProtocolVersion = 770006;
-        consensus.vUpgrades[Consensus::UPGRADE_OVERWINTER].nActivationHeight = 328500;
+        consensus.vUpgrades[Consensus::UPGRADE_OVERWINTER].nActivationHeight = 1;
         consensus.vUpgrades[Consensus::UPGRADE_SAPLING].nProtocolVersion = 770006;
-        consensus.vUpgrades[Consensus::UPGRADE_SAPLING].nActivationHeight = 328500;
+        consensus.vUpgrades[Consensus::UPGRADE_SAPLING].nActivationHeight = 1;
         consensus.vUpgrades[Consensus::UPGRADE_BLOSSOM].nProtocolVersion = 770009;
         consensus.vUpgrades[Consensus::UPGRADE_BLOSSOM].nActivationHeight =
             Consensus::NetworkUpgrade::NO_ACTIVATION_HEIGHT;
@@ -116,41 +116,25 @@ public:
         pchMessageStart[2] = 0x27;
         pchMessageStart[3] = 0x64;
         vAlertPubKey = ParseHex("04d5212ed0303c64db1840e799d31953eb362fd71d8e742dccd9aa78c4713d6d26b44974b44e2ac71aa38b06ef60c020207b85d270e4bdf8c797f3216f969960dc");
-        nDefaultPort = 1989;
+        nDefaultPort = 1847;
         nMaxTipAge = 24 * 60 * 60;
         nPruneAfterHeight = 100000;
         eh_epoch_1 = eh200_9;
         eh_epoch_2 = eh144_5;
-        eh_epoch_1_endblock = 160010;
-        eh_epoch_2_startblock = 160000;
+        eh_epoch_1_endblock = 104;
+        eh_epoch_2_startblock = 104;
 
-        futureBlockTimeWindows = boost::assign::map_list_of
-            ( 0, 2 * 60 ) // originally 2 hours
-            ( 159300, 30 ) // 30 minutes
-            ( 364400, 5 ); // 5 minutes
-
-        vRollingCheckpointStartHeight = 364400;
+        vRollingCheckpointStartHeight = 5;
 
         genesis = CreateGenesisBlock(
-            1478403829,
-            uint256S("0x000000000000000000000000000000000000000000000000000000000000021d"),
+            1581246595,
+            uint256S("0x0000000000000000000000000000000000000000000000000000000000001642"),
             ParseHex(""),
             0x1f07ffff, 4, 0);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        assert(consensus.hashGenesisBlock == uint256S("0xf499ee3d498b4298ac6a64205b8addb7c43197e2a660229be65db8a4534d75c1")); //incremented by 1 making 2
-        assert(genesis.hashMerkleRoot == uint256S("0xf40283d893eb46b35379a404cf06bd58c22ce05b32a4a641adec56e0792789ad"));
-
-        vFixedSeeds.clear();
-        vSeeds.clear();
-        // use name as: echo -n hostname | sha256sum
-        vSeeds.push_back(CDNSSeedData("b8491e7ea3502b8fcda9106923e68b92ef43c331dbf9cfb3c94af473bfbf308b.BTCZ", "btcz.kovach.biz"));
-        vSeeds.push_back(CDNSSeedData("67f534b87f9a2412f845e39102f184e3a48798ed6e2a64d98b915aa12b625e9c.BTCZ", "seed.btcz.life"));
-        vSeeds.push_back(CDNSSeedData("acdd520508bbfa96029867cf64b824fa5e41ebe47918bd4b7855d7a186ed795c.BTCZ", "bzseed.secnode.tk"));
-        vSeeds.push_back(CDNSSeedData("4437c91da6e4c4edca56b57bd52c2e11a3fd7d8b04bd9dec9584fb5220f54b05.BTCZ", "btzseed.blockhub.info"));
-        vSeeds.push_back(CDNSSeedData("0416c4d89c3c4078f7127b7b482c5c242328306f1706fe2edcdb7c94e2fdad45.BTCZ", "seed.btcz.biz"));
-        vSeeds.push_back(CDNSSeedData("e3dca99ba0e7b1d24cca73458f1d67f4014a60565bcf05e5748271922ce897a0.BTCZ", "btczseed.1ds.us"));
-
+        assert(consensus.hashGenesisBlock == uint256S("0x0006a5d89fc283f12bed00b35248cfdcd2962e876d2c7112bb28b8596a033e71")); //incremented by 1 making 2
+        assert(genesis.hashMerkleRoot == uint256S("0xcfa9d7248178109dad5034590b861057b6c658cbb210b903c8c449fc1432e009"));
 
         // guarantees the first 2 characters, when base58 encoded, are "t1"
         base58Prefixes[PUBKEY_ADDRESS]     = {0x1C,0xB8};
@@ -173,7 +157,12 @@ public:
         bech32HRPs[SAPLING_INCOMING_VIEWING_KEY] = "zivks";
         bech32HRPs[SAPLING_EXTENDED_SPEND_KEY]   = "secret-extended-key-main";
 
-        vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
+	vFixedSeeds.clear();
+        vSeeds.clear();
+
+        vSeeds.push_back(CDNSSeedData("0cashnode1", "0cashnode1.xyz"));
+	vSeeds.push_back(CDNSSeedData("0cashnode2", "0cashnode2.xyz"));
+	vSeeds.push_back(CDNSSeedData("0cashnode3", "0cashnode3.xyz"));
 
         fMiningRequiresPeers = true;
         fDefaultConsistencyChecks = false;
@@ -183,28 +172,12 @@ public:
 
         checkpointData = (CCheckpointData) {
             boost::assign::map_list_of
-            ( 0, uint256S("0xf499ee3d498b4298ac6a64205b8addb7c43197e2a660229be65db8a4534d75c1"))
-            ( 2007, uint256S("0x000000215111f83669484439371ced6e3bc48cd7e7d6be8afa18952206304a1b"))
-            ( 10000, uint256S("0x00000002ccb858ec2c35fb79ce2079333461efa50f2b59814558b9ae3ce62a40"))
-            ( 20675, uint256S("0x00000004804df1618f984fef70c1a210988ade5093b6947c691422fc93013a63")) // Thaddeus Kosciuszko - 200th death anniversary (October 15 2017)
-            ( 40000, uint256S("0x00000005a2d9a94e2e16f9c1e578a2eb46cc267ab7a51539d22ff8aa0096140b"))
-            ( 56000, uint256S("0x000000026a063927c6746acec6c0957d1f69fa2ab1a59c06ce30d60bbbcea92a"))
-            ( 84208, uint256S("0x0000000328e5d0346a78aea2d586154ab3145d51ba3936998253593b0ab2980c"))
-            ( 105841, uint256S("0x000000010305387fd72bc70ce5cc5b512fe513016e7208b9ee61d601fe212991"))  //Dr Hawking, Rest in peace.
-            ( 140000, uint256S("0x0000000155f89d1ededf519c6445d41c9240ee4daa721c91c19eea0faa2f02c8"))
-            ( 153955, uint256S("0x00000006913d3122f32e60c9d64e87edd8e9a05444447df49713c15fbae6484d"))
-            ( 160011, uint256S("0x0003a9fbed918bdd83fb5d38016189d5b8fe77495d4a7bd2405d3e8a04a62201"))  //18-06-17  8am UTC Hooray for Zhash!
-            ( 166500, uint256S("0x0000002b640d62dd0c2ab68774b05297d2aa72bd63997d3a73ad959963b148d8"))
-            ( 352440, uint256S("0x000000188d7e36ac236d2a1b549f14fe6fff287b80b4c68a832b6c80b8810fa2"))
-            ( 352540, uint256S("0x00000006838b961606dad5a3da08b595a69cb8fc78684d9a4d3d3727bc96eb2b"))
-            ( 352640, uint256S("0x000000c4a4a131d358a4b5419171c627cfb219367a810ca1780ef3119f634b6b"))
-            ( 352740, uint256S("0x0000006bcc7d38424a1cf996b3b4ee61c44f941523af16c26c22c2708151a977"))
-            ( 357600, uint256S("0x0000003b302a1ecfa6555b64981b1950853f49e022c923e98f94535225c6c54a")),
+            ( 0, uint256S("0x0006a5d89fc283f12bed00b35248cfdcd2962e876d2c7112bb28b8596a033e71")),
 
-            1530166456,     // * UNIX timestamp of last checkpoint block
-            662217,         // * total number of transactions between genesis and last checkpoint
+            1581246595,     // * UNIX timestamp of last checkpoint block
+            0,         // * total number of transactions between genesis and last checkpoint
                             //   (the tx=... number in the SetBestChain debug.log lines)
-            2290.912865  // * estimated number of transactions per day after checkpoint
+            0  // * estimated number of transactions per day after checkpoint
                             //   total number of tx / (checkpoint block height / (24 * 24))
         };
 
@@ -218,109 +191,19 @@ public:
 
         // Community Fee script expects a vector of 2-of-3 multisig addresses
         vCommunityFeeAddress = {
-            "t3eC2B44yVkyj7Q7RMkfBhkDisc4ieYtv5d",
-            "t3cwTuGvHTkQc5ym8K39HkQRqgUeovcVXTy",
-            "t3TxoqRtAytbfkBP7FrUPbSsLVLJAYXzLT7",
-            "t3dghVnkqR8fqKhBipV2ggb4hoHnuWsHA6J",
-            "t3LdFm55TvejDv823296TCMaxP1bDDSKQCQ",
-            "t3UfK69A7EJCxpDoGFon3LJ5snLP3n1vDKC",
-            "t3beERSviug8ardPTZnA2kPSmTQcaJNfL8y",
-            "t3QRFq83FBJBJMg6HDgazjUWeStnsT9222x",
-            "t3eJppdTuMLyYAKFXR1PEz1caonFW2RmJBB",
-            "t3fWX6Tb6oxozvXwikCUV3s6E5uRHom7tEx",
-            "t3ZKRdZPBFk3YNPR6ZfDWj82giBqkUqF2hX",
-            "t3MkQ4ccb4q1Mz7Jzi8XKuQSxuae7PZzTLh",
-            "t3ZyAJzpM8FKiQZZnqzGRB6LyQUYMQyvHMc",
-            "t3Ur38PYZer2qHh9S9s5jiqkf7oe5bbtDVg",
-            "t3f34ZKtaLZKMeRrPkjMVoGyZRBQGLxXL3t",
-            "t3JpszYL1aLDVdhzVGPwSR3DZLGLKrxRLsU",
-            "t3XSxsjYsRQG3SqyhURzthbK8KeTAAJdAMc",
-            "t3euzVctNvQbqeEpn2xNR82PtgYwQ6qYRjf",
-            "t3RG4E22bZfxKc5898VLbaXNHf6ThSJRFib",
-            "t3SgMvNMhc8KhHFWN6YYG4de52PnG98HbnY",
-            "t3NPGwdKqnixFQKrm9gUi6EezaCmscw1FcQ",
-            "t3RzJ8w7pm8N5TiXBwmRu2nhkKfcqrEGCTy",
-            "t3ajEu7N81EDAneDBucYNtg6Nc8U1kh9krT",
-            "t3fKRecuPaUCJqUa5YbFxN6swETy1wTVqrH",
-            "t3cLpLDoAts2Q7s3NsgRBnA2tARDyU6jo32",
-            "t3UPnVmdHZjk3ASSzTCihZyvMy9PXGyd6q7",
-            "t3KLY8t3HEKx3eKbbMSzKToKBZgVAyCiFhs",
-            "t3QsMwSJEkQCgo3sXej5UjQCL3jHmpBHJip",
-            "t3ZLJ81cBfUnqJ4s4yG9Ki4TTCq7Bd9eVut",
-            "t3UDeoqzJUg9Fr5zwsqGwqhYHKgr36L4RJc",
-            "t3SQTn4JtTXu8GurZsCzQx5xxH8MqJQ7iii",
-            "t3Rh7iw8Pw4SJZrRwTnoTBv8eV3GwSF2hy9",
-            "t3N9p9vVZTpc8reeuAZ9zGx1zoBjH4SjanH",
-            "t3gqTdfwB1TiwN2ZCRcf9uEyrZKyXL5ccza",
-            "t3gnsKHic8ne96pjx8nrFSJ643whhzcoyeE",
-            "t3gsHcGLN3r35yEB59iNhCJw2iHuQKMZRie",
-            "t3XxfcJQiy18Ex6jjuUX5k48K94EkqDagQN",
-            "t3ZDGsmra5Cqk3bTvXWfsV4vYXXXSNKB9AE",
-            "t3Y1YmUwa5LWQ1rTpzePN7EaNJsjb3pqK7J",
-            "t3UzzHe2jeZua46RWL9bGuqkKs5STcoqPBJ",
-            "t3MUQ1wGzC1977gSGzcoys4wt8d4JCdcuLv",
-            "t3TA5fhiZn5AUQwyvL8WMdvySdoeq9wXvCT",
-            "t3QKJnR4mrsGN4FyrdCHwoGC5LsEiYzRxKi",
-            "t3Zw9p7MymABQDCUAkGbJKbw36Q3yZziwoe",
-            "t3e73KWV7uY6rr2WoB1s2MCkkPjRxwGeCpt",
-            "t3No3teH29dUJDcvQjLMPMZGoWN7vxU21LN",
-            "t3VqnNUwzfrNkyDQoV3eBhcxQAQD3AXFFEZ",
-            "t3KwL1ai4HvNaCcvnSYMkow9ywrXpvfz6Rr",
-            "t3c72hsWG8SSMmMEwgS4BhVLEbaxS3PuHY4",
-            "t3e7m74PF6yzW3zF5zAFYPCK7uVriykHoLu",
-            "t3SausNGUC2vU6WkAN63khGL8axYFNYCQDg",
-            "t3YPPSp668pSCQRrACgzTPoLuVaRTFFoeus",
-            "t3cESR3q2Hh6mJbyC6ZBu4Jz8Dp1t7mbHLY",
-            "t3WdLNKb194Ta3JRHxiip5ov83bFdLEwT91",
-            "t3RixV5JL3Dr8B3sLZNWKokTWtVgnVMZZqM",
-            "t3QKuKTub5vSRmWY6ExZqnUB3q5xLU1Lhp4",
-            "t3U2X6AvUMWGWqFc1JxzsmeqDQq7G4Bcw3P",
-            "t3Muezje93XcbjcWXKAeiPkACvADqZ4sed5",
-            "t3S2fQysABXFxQJHGiE5tonFGRsuJkCYeRh",
-            "t3PjeLxNmvbeSra4fURNKJazJDFwYdwSoA4",
-            "t3VRFH5L43EbfTdnPwXRPvv3enRiAuvCJyG",
-            "t3Tf22bky4tgR1wWKXKaKrtvZuLnuuh1dqM",
-            "t3NKkGpiaUAX424KcPmX5UQ5xDx5scmKszz",
-            "t3RFL3GARoko4vcPz1kvMpTBBrCUdwUiTM6",
-            "t3eWEXExkTwNS4rFAMPKVA4CGVYQcJgbmdR",
-            "t3VgtNUJLg1XDva3uMzVs8ZWsfmcneCwBoL",
-            "t3Szm7fpJGzHnjxp1oSLciWHvVBNH3JBRg2",
-            "t3USbLxCgLD5PzyDEy3bukoMZikiURRSL3S",
-            "t3dZSEiB5p6y5WRZtCvz9CXRxnJSGoF9xp7",
-            "t3YUjNigA9iD9gcJijy2X7qLvodMQaPwXYv",
-            "t3MMfDtoysWMuhSa9wNTyjCvT3PtZ12UbeH",
-            "t3KkanhBkRgJWTPckBHJazjasfnNi9DDCKe",
-            "t3V3xqLmyjcSi1s6cJshCqP1Cf27x9DE2AB",
-            "t3LgvwqUzsBGe9cPLqz2E2SXMxfPqSj6vh8",
-            "t3VWw4ZRHHYZPgFMkEjBxdVCrUjJQtEHqah",
-            "t3VWzRA9uP7c9zNiuBeB1V45c41ntDYdUQ6",
-            "t3UHQzHwBXtb2SL823eVBVVeJiLhS1iL6Jm",
-            "t3LhjLqqKKs4yvq1umm9MxpXj7FYuuiiYtm",
-            "t3bnF3z7Z2DXc4p2tm5v5wtPQZQh7KFKjAK",
-            "t3aLaR9GNpCoFF1HAKUCGzaR1wEEEK8G4vF",
-            "t3YvmLwEBtYxLbRNQcMcqmHuSF7MAgRo1Dg",
-            "t3ZCuv9FAYFzJBHVXWiGRmdXmE75WfPvi1J",
-            "t3gn9cFxcnhuLpbBRX83Vt85EsWWh7t53co",
-            "t3UdNuyX5u1ZSp38rsxyWtSYwHkrSd5xcut",
-            "t3cotrT3GSzEqyKreNJmmS6kdzpCg6DafWW",
-            "t3KBUuKs9LbfaNZRXWVAYcKynXiYR3Ega93",
-            "t3duamHU9FHanjbhr2C5PUSUctRP2bujdut",
-            "t3KxdJqVTTTVBcjCfcvbHipb4uLRM8WYo8H",
-            "t3RzdWNacywKryT31xRvSpv79Viag87cCYG",
-            "t3XdEptUkTXQLkiigBzCzzEsNSqHbgo37WT",
-            "t3gqDqSuEWbYHxNcsagn44jRySjMHC2z5T2",
-            "t3XCxm4jLmqwc4wLBrPhRkoHvp3nCJCqioX",
-            "t3b1e9rURGhwAbpKfs9wHJD5qVxZsf44ZTR",
-            "t3KP9rhDrCH8V8LzGRx9up281rsPg4tdv1Y",
-            "t3XXxYXXnx2PiZSGbzmr9rmEXDvY9yYBvTb",
-            "t3LHTCBkpq3b22wjuHT1usGsGSBJ3CdJhSJ",
-            "t3PycyM8zzm9zptQ14QV7TT45uGsf3dsEPP",
-            "t3fUhKH2G5TYbmuZrkq4a6GJon51D6Qiyss",
-            "t3gGLesWeA25QKbb1QFNMw6NN33T6hcQAAE",
-            "t3bi7pnM4mQ6RbQZwufGDt9m2uNnxHNBk37"
+            "t3gHuqS6FnewvKRPZFXFmhfbPb9Nvfbsrg6",
+            "t3SyzgMMrV3EePKnr2wiw65nBHbmN8GzjvA",
+            "t3RqH7JhqEB2ERULekR5WRSuxzJiGPEjqKT",
+            "t3curSWoCnLqhgJTEcnX1qfW6wEsGMEYnGi",
+            "t3ZxeGaz5PJQXQwFKoSesPxgeqXjyPBoa5h",
+            "t3beRemdNB9EmGr5bsCeZe8iQk4jgAXWzZs",
+            "t3gQpEyktxxj6yxGUaeLjfzP1JGwSAuuL7o",
+            "t3gX34RAqpxVSnFcm4Ak3D776kNJjkHKsWG",
+            "t3MS6XVB2e8FRppvzYfEHUjuYnUSh4QJvb3",
+            "t3UJW9S2yXH6HhDzAxqxR8BZCrfM9Vd8po6"
         };
-        vCommunityFeeStartHeight = 328500;
-        vCommunityFeeLastHeight = 1400000;
+        vCommunityFeeStartHeight = 2;
+        vCommunityFeeLastHeight = 1000000;
         assert(vCommunityFeeAddress.size() <= GetLastCommunityFeeBlockHeight());
     }
 };
@@ -370,7 +253,7 @@ public:
         pchMessageStart[2] = 0xf9;
         pchMessageStart[3] = 0xbf;
         vAlertPubKey = ParseHex("048679fb891b15d0cada9692047fd0ae26ad8bfb83fabddbb50334ee5bc0683294deb410be20513c5af6e7b9cec717ade82b27080ee6ef9a245c36a795ab044bb3");
-        nDefaultPort = 11989;
+        nDefaultPort = 11847;
         nMaxTipAge = 24 * 60 * 60;
         nPruneAfterHeight = 1000;
         eh_epoch_1 = eh200_9;
@@ -392,11 +275,10 @@ public:
             0x2007ffff, 4, 0);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        assert(consensus.hashGenesisBlock == uint256S("0x198659d06394e6d6b822495cd03dfe154987b48bfb83c137b18a2c62914b55f4"));
+        assert(consensus.hashGenesisBlock == uint256S("0x" + consensus.hashGenesisBlock.ToString()));
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.push_back(CDNSSeedData("978b674532d58328c4da63ab138c476ffa2f8a8b2b5a023a668fd3a97eb7c48b.TZB", "testnetseed.btcz.biz"));
         //vSeeds.push_back(CDNSSeedData("rotorproject.org", "test-dnsseed.rotorproject.org")); // Zclassic
 
         // guarantees the first 2 characters, when base58 encoded, are "tm"
@@ -447,96 +329,6 @@ public:
 
         // Founders reward script expects a vector of 2-of-3 multisig addresses
         vCommunityFeeAddress = {
-            "t2FpKCWt95LAPVRed61YbBny9yz5nqexLGN",
-            "t2RqJNenxiDjC5NiVo84xgfHcYuwsPcpCie",
-            "t2MsHkAug2oEiqj4L5ZGZH1vHmdogTSb9km",
-            "t2EwBFfC96DCiCAcJuEqGUbUes8rTNmaD6Q",
-            "t2JqYXRoTsKb9r1rTLLwDs5jMXzsRBV317k",
-            "t2RocidGU4ReKPK2uTPYfNFgeZEWDCd3jsj",
-            "t2Mu8ToNiVow92PfETBk5Z6HWuAEG7RVXVD",
-            "t2MSLT1n4eQ87QC2FAxMvuTZ84zDzEj7FhQ",
-            "t2JZNFrWv1c4RqkCmDN9iRkPsG8xAZFdyGS",
-            "t2AyjEVUCf5jthGHZjwfbztDBHQbztkJB5v",
-            "t2Gs6dTYCzaFdHSeT91zaFLKmYzyqYY3NnP",
-            "t2FXfNK7iQhTdMFcGUyrizqXQE5qbmPK6zc",
-            "t2UqLwQ85pR1fdFMoUzXadXRB97JxP6vTWY",
-            "t2BocGBq7iBXQP8UQiousNVwU8M6AqUtaRx",
-            "t2VGGdXhspjF3iQvbWZW2zPNSDRSYauBcM3",
-            "t2HTNHicoeEXxsX1wVhsqsX3LgzRq2pYgWH",
-            "t2UiVSyM1vuvs6xP3157ytuYMKN6MuqmgJE",
-            "t2UmPyNoWSVUgyPzEXzFGN5GS96jMH2kreW",
-            "t2MQWZJHxZF5zSw6LbZ3S7jqoLX1y6SWLHQ",
-            "t2VUR1c1aFaTUo93uhi7rfFVRRZaT1aQYbv",
-            "t2NgLU6QCJhCKgBsR5uX6R4ds82jymzMoMJ",
-            "t2RorFwMUEb7NamvXFi3jCXitAdRoQtU1Hs",
-            "t2FFtmwePBnYaRVRVg1wsoBPxDzGMLrz3Jv",
-            "t2GH3734fKEhPo3NvvAZQazsFf3V51oR4c2",
-            "t2Ev3twAmUmono3gM2Q6RsfhRiryy7TnX5E",
-            "t2EmhhAjh6cLpyw6Yc9QEXvsjm7qdKpgFQP",
-            "t2Gy5N7DYbEZmiHqm3m8Re25a8Bxu7e36ju",
-            "t2LVSaxizciFWfc5gr1xccHXT115RSnQ13r",
-            "t28zy3Qiq3FtMeB2PCEysF7R5TgW5UfZN1N",
-            "t2FcN7o26gRCc8ZuSZcc7X7APPRqWQ5a3W2",
-            "t27QTHP9qoi5HkiTqx4JV86MGG37aikK51s",
-            "t2CwQ6H9GPT77nqRwkHCuVcyGvtbhxWHfAk",
-            "t2HLUDaoimaaSpQhHnvbqpKg6Fi37rAo6cx",
-            "t2Ebuq1FX7Qzi3ur1FnwsDMvfNBFjqVqDGX",
-            "t2Bca3HbSbwgQp1ZhzheNvGfpwBoU6Syt8G",
-            "t2EurfAqyJMsCyx6ujYecQSxrPPY7xxTqcB",
-            "t2R1kJGeNhLpKx1dKNCnBUq1BkxBVJjQdcp",
-            "t2M3x9koBJWJS1F9bGtWXTsVfr5pesWSTbR",
-            "t2La4mEMruVTtBqhndS7zRvmi2WsqWUjPQz",
-            "t29GwTHLXxYgF5k7SSj7XFaHB7JsocM9bDU",
-            "t2Awpdv7yG2QFeHeq17J1qCSXRw1AM3mfmz",
-            "t2BfotpLdNhhewRp9nXpBBYViBaq4y1Lnj5",
-            "t2F4CH89prySyGZHUiPYJUjnZk9UPXgLBbf",
-            "t2DNx1KzP8a2S3kZgAPngso9ptva5gE7Jbn",
-            "t2Eb7orwhjGcu4wYwHBzN5BoXzroPGq3CoM",
-            "t2BXYmM21WCdHiC1KiwQVHxaTvLQJpqXTvH",
-            "t27Y6774dwAcCFvYrhDKTXgaxtUewAdZdtz",
-            "t2JvmRjZnViBZXJJBekDygdvGTCRNWgFEK2",
-            "t2PL5W7qy1DKNRPWECbaZ6gV9GEzMn8h97Z",
-            "t2S1JaefdSNwaUexdr6ZtNJhqZS8uDGSNFg",
-            "t2BTunj4VB44Q22crWpT1ykoBvNGFKMnD7N",
-            "t2G7DkSoEUJGaEBH6erKsXemoHFqqTRaSiZ",
-            "t2Ldg8Bc6AWDuESqPgUoumWfCYw3zqKF8s9",
-            "t2Ft4QMMiJfKXVbhyGBrkwjnfn5ua73VuLo",
-            "t26xLxd4Fabbotkc9gfFwpCVHoZG1W9rmN7",
-            "t2DyghJMpK6rRKPEAL3DBKmCntUcj8bUiHg",
-            "t2RSYhCsgw2AdBiUUyXBCkFf2xE9ddwyESD",
-            "t26fv5NLiFYXMmfQnvqcJXcYnt5NY41eqrv",
-            "t2Ppht55eXKC1BX7pfusJxZqbHnkp9oWbBW",
-            "t2P4AWJ5C4ySU3KzfehAeppH2BV4Y87w34z",
-            "t28zjDUH2Gkvt8Ytb8UrW7L6G5U1QMwJFM3",
-            "t2JXDd9pumryTAXqDD98vDLS2ZLSQCNQrYZ",
-            "t2BNuNGnGq49MZzr7SH8WtEE7sSwZ9n3bsz",
-            "t2QumKdHZhkFD6ntrzJ9zJAga2QemEgqc9r",
-            "t2UKz2L7V3C6GTeBPDXmQnwMyqKEbgMpuXg",
-            "t2CyVugoafiDYpeSNd9DGZEng6Bpr4tqa3d",
-            "t2GR9eEen8KUDjhQG1opC1aFt27zxdtufnF",
-            "t2JKYuSRNupdHdTR91tqR4xsaU6friVJJgv",
-            "t2D2yMZEM3K8ap6iLo3FX2g1Ch9coPSVq2R",
-            "t2SeFu34eiE2rCPFpxrN8im6ZvcwMpdKnit",
-            "t2KH46EXQy5wnZHDGVDA7Q13FdRkdQ3LUou",
-            "t2UsTpuVqP6ZubtN8tQGPnh7Cqjjf1hoefd",
-            "t2Dd119xiqDbF9QzWwYfnYWUPfqgnL1CNFu",
-            "t29PjecMhv6EygD8W6smcMHAB8MSHQY3YnQ",
-            "t2BDZpxgcMRzqgKbDBiXRXrvL3VwD7G8cLc",
-            "t2MwiKqfCMdy7o96bXvbZ5aGCrRmVfVWVfA",
-            "t2Vhkny4jNjy6ZD53jeQzsdgZiZyejwRsgY",
-            "t2K3ouBrLAbYwZv6beoHjzfsE1AbYVa6PuE",
-            "t2DskMSpWs8i9vK2PhNpi9Mu2qJSvEDi8UZ",
-            "t2JB2Uz3eVWrxFhas1B1cSXLP22JHbRNYtL",
-            "t2ArYKW1L8hRoCDK9odNmD4piRwFheErWL1",
-            "t2K1zKGHrkibiFoYJ5GtfHe5xJecJPEvFwQ",
-            "t2VnABknMprtMk8y5AdDCBr2R9QZnMhfqSm",
-            "t2FbjEsP9eeQr5PmP7yC3fopPTuYS9E9VgN",
-            "t2Sn2XUPZEnFcggB77jvxBqX6LcjdCzcJUs",
-            "t2SEK3Tw5FYYUaeZcF5QemfeG3tiorrxNKp",
-            "t2D78THpHVodnhiREjF22A3KRznor5pPnR1",
-            "t2GyqFdkf6FoQTShEhLGsNrTxAWqmeq4pui",
-            "t2HnNgFLznEqaokYq8PBV44uzRwAmJXQeKd",
-            "t2PpHVStdHvWkzXsyuyPYQQq96ZRQu7ALpE",
             "t2FHbHM9rKKHZe74HRBNozwNdRsExug8tCw",
             "t29tM6DkMPSVp9R3g7UjZjvsobKhsbsRqFL",
             "t2K2KixLVJo19phPJMv9ApSiFmxQCSQUvc9",
@@ -600,7 +392,7 @@ public:
         pchMessageStart[1] = 0xe8;
         pchMessageStart[2] = 0x3f;
         pchMessageStart[3] = 0x5f;
-        nDefaultPort = 11989;
+        nDefaultPort = 11847;
         nMaxTipAge = 24 * 60 * 60;
         //assert(consensus.hashGenesisBlock == uint256S("0x0575f78ee8dc057deee78ef691876e3be29833aaee5e189bb0459c087451305a"));
         nPruneAfterHeight = 1000;
@@ -627,7 +419,6 @@ public:
 
         vFixedSeeds.clear(); //! Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();  //! Regtest mode doesn't have any DNS seeds.
-        vSeeds.push_back(CDNSSeedData("978b674532d58328c4da63ab138c476ffa2f8a8b2b5a023a668fd3a97eb7c48b.TZB", "testnetseed.btcz.biz"));
         //vSeeds.push_back(CDNSSeedData("rotorproject.org", "test-dnsseed.rotorproject.org")); // Zclassic
 
         fMiningRequiresPeers = false;
@@ -662,96 +453,6 @@ public:
 
         // Founders reward script expects a vector of 2-of-3 multisig addresses
         vCommunityFeeAddress = {
-            "t2FpKCWt95LAPVRed61YbBny9yz5nqexLGN",
-            "t2RqJNenxiDjC5NiVo84xgfHcYuwsPcpCie",
-            "t2MsHkAug2oEiqj4L5ZGZH1vHmdogTSb9km",
-            "t2EwBFfC96DCiCAcJuEqGUbUes8rTNmaD6Q",
-            "t2JqYXRoTsKb9r1rTLLwDs5jMXzsRBV317k",
-            "t2RocidGU4ReKPK2uTPYfNFgeZEWDCd3jsj",
-            "t2Mu8ToNiVow92PfETBk5Z6HWuAEG7RVXVD",
-            "t2MSLT1n4eQ87QC2FAxMvuTZ84zDzEj7FhQ",
-            "t2JZNFrWv1c4RqkCmDN9iRkPsG8xAZFdyGS",
-            "t2AyjEVUCf5jthGHZjwfbztDBHQbztkJB5v",
-            "t2Gs6dTYCzaFdHSeT91zaFLKmYzyqYY3NnP",
-            "t2FXfNK7iQhTdMFcGUyrizqXQE5qbmPK6zc",
-            "t2UqLwQ85pR1fdFMoUzXadXRB97JxP6vTWY",
-            "t2BocGBq7iBXQP8UQiousNVwU8M6AqUtaRx",
-            "t2VGGdXhspjF3iQvbWZW2zPNSDRSYauBcM3",
-            "t2HTNHicoeEXxsX1wVhsqsX3LgzRq2pYgWH",
-            "t2UiVSyM1vuvs6xP3157ytuYMKN6MuqmgJE",
-            "t2UmPyNoWSVUgyPzEXzFGN5GS96jMH2kreW",
-            "t2MQWZJHxZF5zSw6LbZ3S7jqoLX1y6SWLHQ",
-            "t2VUR1c1aFaTUo93uhi7rfFVRRZaT1aQYbv",
-            "t2NgLU6QCJhCKgBsR5uX6R4ds82jymzMoMJ",
-            "t2RorFwMUEb7NamvXFi3jCXitAdRoQtU1Hs",
-            "t2FFtmwePBnYaRVRVg1wsoBPxDzGMLrz3Jv",
-            "t2GH3734fKEhPo3NvvAZQazsFf3V51oR4c2",
-            "t2Ev3twAmUmono3gM2Q6RsfhRiryy7TnX5E",
-            "t2EmhhAjh6cLpyw6Yc9QEXvsjm7qdKpgFQP",
-            "t2Gy5N7DYbEZmiHqm3m8Re25a8Bxu7e36ju",
-            "t2LVSaxizciFWfc5gr1xccHXT115RSnQ13r",
-            "t28zy3Qiq3FtMeB2PCEysF7R5TgW5UfZN1N",
-            "t2FcN7o26gRCc8ZuSZcc7X7APPRqWQ5a3W2",
-            "t27QTHP9qoi5HkiTqx4JV86MGG37aikK51s",
-            "t2CwQ6H9GPT77nqRwkHCuVcyGvtbhxWHfAk",
-            "t2HLUDaoimaaSpQhHnvbqpKg6Fi37rAo6cx",
-            "t2Ebuq1FX7Qzi3ur1FnwsDMvfNBFjqVqDGX",
-            "t2Bca3HbSbwgQp1ZhzheNvGfpwBoU6Syt8G",
-            "t2EurfAqyJMsCyx6ujYecQSxrPPY7xxTqcB",
-            "t2R1kJGeNhLpKx1dKNCnBUq1BkxBVJjQdcp",
-            "t2M3x9koBJWJS1F9bGtWXTsVfr5pesWSTbR",
-            "t2La4mEMruVTtBqhndS7zRvmi2WsqWUjPQz",
-            "t29GwTHLXxYgF5k7SSj7XFaHB7JsocM9bDU",
-            "t2Awpdv7yG2QFeHeq17J1qCSXRw1AM3mfmz",
-            "t2BfotpLdNhhewRp9nXpBBYViBaq4y1Lnj5",
-            "t2F4CH89prySyGZHUiPYJUjnZk9UPXgLBbf",
-            "t2DNx1KzP8a2S3kZgAPngso9ptva5gE7Jbn",
-            "t2Eb7orwhjGcu4wYwHBzN5BoXzroPGq3CoM",
-            "t2BXYmM21WCdHiC1KiwQVHxaTvLQJpqXTvH",
-            "t27Y6774dwAcCFvYrhDKTXgaxtUewAdZdtz",
-            "t2JvmRjZnViBZXJJBekDygdvGTCRNWgFEK2",
-            "t2PL5W7qy1DKNRPWECbaZ6gV9GEzMn8h97Z",
-            "t2S1JaefdSNwaUexdr6ZtNJhqZS8uDGSNFg",
-            "t2BTunj4VB44Q22crWpT1ykoBvNGFKMnD7N",
-            "t2G7DkSoEUJGaEBH6erKsXemoHFqqTRaSiZ",
-            "t2Ldg8Bc6AWDuESqPgUoumWfCYw3zqKF8s9",
-            "t2Ft4QMMiJfKXVbhyGBrkwjnfn5ua73VuLo",
-            "t26xLxd4Fabbotkc9gfFwpCVHoZG1W9rmN7",
-            "t2DyghJMpK6rRKPEAL3DBKmCntUcj8bUiHg",
-            "t2RSYhCsgw2AdBiUUyXBCkFf2xE9ddwyESD",
-            "t26fv5NLiFYXMmfQnvqcJXcYnt5NY41eqrv",
-            "t2Ppht55eXKC1BX7pfusJxZqbHnkp9oWbBW",
-            "t2P4AWJ5C4ySU3KzfehAeppH2BV4Y87w34z",
-            "t28zjDUH2Gkvt8Ytb8UrW7L6G5U1QMwJFM3",
-            "t2JXDd9pumryTAXqDD98vDLS2ZLSQCNQrYZ",
-            "t2BNuNGnGq49MZzr7SH8WtEE7sSwZ9n3bsz",
-            "t2QumKdHZhkFD6ntrzJ9zJAga2QemEgqc9r",
-            "t2UKz2L7V3C6GTeBPDXmQnwMyqKEbgMpuXg",
-            "t2CyVugoafiDYpeSNd9DGZEng6Bpr4tqa3d",
-            "t2GR9eEen8KUDjhQG1opC1aFt27zxdtufnF",
-            "t2JKYuSRNupdHdTR91tqR4xsaU6friVJJgv",
-            "t2D2yMZEM3K8ap6iLo3FX2g1Ch9coPSVq2R",
-            "t2SeFu34eiE2rCPFpxrN8im6ZvcwMpdKnit",
-            "t2KH46EXQy5wnZHDGVDA7Q13FdRkdQ3LUou",
-            "t2UsTpuVqP6ZubtN8tQGPnh7Cqjjf1hoefd",
-            "t2Dd119xiqDbF9QzWwYfnYWUPfqgnL1CNFu",
-            "t29PjecMhv6EygD8W6smcMHAB8MSHQY3YnQ",
-            "t2BDZpxgcMRzqgKbDBiXRXrvL3VwD7G8cLc",
-            "t2MwiKqfCMdy7o96bXvbZ5aGCrRmVfVWVfA",
-            "t2Vhkny4jNjy6ZD53jeQzsdgZiZyejwRsgY",
-            "t2K3ouBrLAbYwZv6beoHjzfsE1AbYVa6PuE",
-            "t2DskMSpWs8i9vK2PhNpi9Mu2qJSvEDi8UZ",
-            "t2JB2Uz3eVWrxFhas1B1cSXLP22JHbRNYtL",
-            "t2ArYKW1L8hRoCDK9odNmD4piRwFheErWL1",
-            "t2K1zKGHrkibiFoYJ5GtfHe5xJecJPEvFwQ",
-            "t2VnABknMprtMk8y5AdDCBr2R9QZnMhfqSm",
-            "t2FbjEsP9eeQr5PmP7yC3fopPTuYS9E9VgN",
-            "t2Sn2XUPZEnFcggB77jvxBqX6LcjdCzcJUs",
-            "t2SEK3Tw5FYYUaeZcF5QemfeG3tiorrxNKp",
-            "t2D78THpHVodnhiREjF22A3KRznor5pPnR1",
-            "t2GyqFdkf6FoQTShEhLGsNrTxAWqmeq4pui",
-            "t2HnNgFLznEqaokYq8PBV44uzRwAmJXQeKd",
-            "t2PpHVStdHvWkzXsyuyPYQQq96ZRQu7ALpE",
             "t2FHbHM9rKKHZe74HRBNozwNdRsExug8tCw",
             "t29tM6DkMPSVp9R3g7UjZjvsobKhsbsRqFL",
             "t2K2KixLVJo19phPJMv9ApSiFmxQCSQUvc9",
@@ -897,11 +598,5 @@ bool checkEHParamaters(int solSize, int height, const CChainParams& params) {
 }
 
 int CChainParams::GetFutureBlockTimeWindow(int height) const {
-    BOOST_REVERSE_FOREACH(const MapFutureBlockTimeWindows::value_type& i, futureBlockTimeWindows)
-    {
-        if (i.first <= height) {
-            return i.second * 60;
-        }
-    }
-    return 2 * 60 * 60;
+    return 300;
 }

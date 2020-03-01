@@ -48,10 +48,10 @@ static int AppInitRawTx(int argc, char* argv[])
     if (argc<2 || mapArgs.count("-?") || mapArgs.count("-h") || mapArgs.count("-help"))
     {
         // First part of help message is specific to this utility
-        std::string strUsage = _("BitcoinZ bitcoinz-tx utility version") + " " + FormatFullVersion() + "\n\n" +
+        std::string strUsage = _("0cash 0cash-tx utility version") + " " + FormatFullVersion() + "\n\n" +
             _("Usage:") + "\n" +
-              "  bitcoinz-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded bitcoinz transaction") + "\n" +
-              "  bitcoinz-tx [options] -create [commands]   " + _("Create hex-encoded bitcoinz transaction") + "\n" +
+              "  0cash-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded 0cash transaction") + "\n" +
+              "  0cash-tx [options] -create [commands]   " + _("Create hex-encoded 0cash transaction") + "\n" +
               "\n";
 
         fprintf(stdout, "%s", strUsage.c_str());

@@ -92,11 +92,11 @@ noinst_PROGRAMS =
 TESTS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += bitcoinzd
+  bin_PROGRAMS += 0cashd
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += bitcoinz-cli bitcoinz-tx
+  bin_PROGRAMS += 0cash-cli 0cash-tx
 endif
 
 LIBZCASH_H = \
@@ -240,7 +240,7 @@ obj/build.h: FORCE
 	  $(abs_top_srcdir)
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: bitcoinzd
+# server: 0cashd
 libbitcoin_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
 libbitcoin_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_server_a_SOURCES = \
@@ -300,7 +300,7 @@ libbitcoin_proton_a_SOURCES = \
   amqp/amqppublishnotifier.cpp
 endif
 
-# wallet: bitcoinzd, but only linked when wallet enabled
+# wallet: 0cashd, but only linked when wallet enabled
 libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_wallet_a_SOURCES = \
@@ -356,7 +356,7 @@ crypto_libbitcoin_crypto_a_SOURCES += \
   ${EQUIHASH_TROMP_SOURCES}
 endif
 
-# common: shared between bitcoinzd and non-server tools
+# common: shared between 0cashd and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
@@ -418,7 +418,7 @@ if GLIBC_BACK_COMPAT
 libbitcoin_util_a_SOURCES += compat/glibc_compat.cpp
 endif
 
-# cli: bitcoinz-cli
+# cli: 0cash-cli
 libbitcoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_cli_a_SOURCES = \
@@ -430,16 +430,16 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # bitcoind binary #
-bitcoinzd_SOURCES = bitcoind.cpp
-bitcoinzd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-bitcoinzd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bitcoinzd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+0cashd_SOURCES = bitcoind.cpp
+0cashd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+0cashd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+0cashd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bitcoinzd_SOURCES += bitcoind-res.rc
+0cashd_SOURCES += bitcoind-res.rc
 endif
 
-bitcoinzd_LDADD = \
+0cashd_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_COMMON) \
@@ -454,7 +454,7 @@ bitcoinzd_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-bitcoinzd_LDADD += \
+0cashd_LDADD += \
   $(BOOST_LIBS) \
   $(BDB_LIBS) \
   $(SSL_LIBS) \
@@ -467,16 +467,16 @@ bitcoinzd_LDADD += \
   $(LIBZCASH_LIBS)
 
 # bitcoin-cli binary #
-bitcoinz_cli_SOURCES = bitcoin-cli.cpp
-bitcoinz_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-bitcoinz_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bitcoinz_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+0cash_cli_SOURCES = bitcoin-cli.cpp
+0cash_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+0cash_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+0cash_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bitcoinz_cli_SOURCES += bitcoin-cli-res.rc
+0cash_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-bitcoinz_cli_LDADD = \
+0cash_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
@@ -490,18 +490,18 @@ bitcoinz_cli_LDADD = \
   $(LIBZCASH_LIBS)
 #
 
-# bitcoinz-tx binary #
-bitcoinz_tx_SOURCES = bitcoin-tx.cpp
-bitcoinz_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-bitcoinz_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bitcoinz_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# 0cash-tx binary #
+0cash_tx_SOURCES = bitcoin-tx.cpp
+0cash_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+0cash_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+0cash_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bitcoinz_tx_SOURCES += bitcoin-tx-res.rc
+0cash_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
-# FIXME: Is libzcash needed for bitcoinz_tx?
-bitcoinz_tx_LDADD = \
+# FIXME: Is libzcash needed for 0cash_tx?
+0cash_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
@@ -511,7 +511,7 @@ bitcoinz_tx_LDADD = \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBZCASH_LIBS)
 
-bitcoinz_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+0cash_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
 # zcash protocol primitives #

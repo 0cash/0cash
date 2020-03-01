@@ -165,7 +165,7 @@ Threads
 
 - ThreadRPCServer : Remote procedure call handler, listens on port 8232 for connections and services them.
 
-- BitcoinZMiner : Generates zcash (if wallet is enabled).
+- 0cashMiner : Generates zcash (if wallet is enabled).
 
 - Shutdown : Does an orderly shutdown of everything.
 

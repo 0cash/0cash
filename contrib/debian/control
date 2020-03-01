@@ -1,17 +1,17 @@
-Source: bitcoinz
+Source: 0cash
 Section: utils
 Priority: optional
-Maintainer: The BitcoinZ Community <bitcoinzcommunity@gmail.com>
-Homepage: https://btcz.rocks
+Maintainer: The 0cash Community <0cashteam@gmail.com>
+Homepage: https://0cash.org
 Build-Depends: autoconf, automake, bsdmainutils, build-essential,
  git, g++-multilib, libc6-dev, libtool,
  m4, ncurses-dev, pkg-config, python,
  unzip, wget, zlib1g-dev
-Vcs-Git: https://github.com/btcz/bitcoinz.git
-Vcs-Browser: https://github.com/btcz
+Vcs-Git: https://github.com/0cash/0cash
+Vcs-Browser: https://github.com/0cash
 
-Package: bitcoinz
-Version: 1.4.0
+Package: 0cash
+Version: 1.0.0
 Depends: ${shlibs:Depends}
 Architecture: all
-Description: BitcoinZ is a decentralized community project based on the Bitcoin and Zcash codebase.
+Description: 0cash is a decentralized community project based on the Bitcoin and Zcash codebase.

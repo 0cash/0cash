@@ -48,7 +48,7 @@ class WalletTest (BitcoinTestFramework):
         assert_equal(self.nodes[1].getbalance("*"), 12500)
         assert_equal(self.nodes[2].getbalance("*"), 0)
 
-        # Send 26250 BTCZ from 0 to 2 using sendtoaddress call.
+        # Send 26250 ZCH from 0 to 2 using sendtoaddress call.
         # Second transaction will be child of first, and will require a fee
         self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), 13750)
         self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), 12500)
@@ -65,7 +65,7 @@ class WalletTest (BitcoinTestFramework):
         self.nodes[1].generate(100)
         self.sync_all()
 
-        # node0 should end up with 62500 btcz in block rewards plus fees, but
+        # node0 should end up with 62500 0cash in block rewards plus fees, but
         # minus the 26250 plus fees sent to node2
         assert_equal(self.nodes[0].getbalance(), 62500-26250)
         assert_equal(self.nodes[2].getbalance(), 26250)
@@ -135,7 +135,7 @@ class WalletTest (BitcoinTestFramework):
         assert_equal(self.nodes[0].getbalance("*"), 0)
         assert_equal(self.nodes[2].getbalance("*"), 62500)
 
-        # Send 12500 BTCZ normal
+        # Send 12500 ZCH normal
         address = self.nodes[0].getnewaddress("")
         self.nodes[2].settxfee(Decimal('0.001'))
         self.nodes[2].sendtoaddress(address, 12500, "", "", False)
@@ -147,7 +147,7 @@ class WalletTest (BitcoinTestFramework):
         assert_equal(self.nodes[2].getbalance("*"), Decimal('49999.99900000'))
         assert_equal(self.nodes[0].getbalance("*"), Decimal('12500.00000000'))
 
-        # Send 12500 BTCZ with subtract fee from amount
+        # Send 12500 ZCH with subtract fee from amount
         self.nodes[2].sendtoaddress(address, 12500, "", "", True)
         self.sync_all()
         self.nodes[2].generate(1)
@@ -157,7 +157,7 @@ class WalletTest (BitcoinTestFramework):
         assert_equal(self.nodes[2].getbalance("*"), Decimal('37499.99900000'))
         assert_equal(self.nodes[0].getbalance("*"), Decimal('24999.99900000'))
 
-        # Sendmany 12500 BTCZ
+        # Sendmany 12500 ZCH
         self.nodes[2].sendmany("", {address: 12500}, 0, "", [])
         self.sync_all()
         self.nodes[2].generate(1)
@@ -167,7 +167,7 @@ class WalletTest (BitcoinTestFramework):
         assert_equal(self.nodes[2].getbalance("*"), Decimal('24999.99800000'))
         assert_equal(self.nodes[0].getbalance("*"), Decimal('37499.99900000'))
 
-        # Sendmany 12500 BTCZ with subtract fee from amount
+        # Sendmany 12500 ZCH with subtract fee from amount
         self.nodes[2].sendmany("", {address: 12500}, 0, "", [address])
         self.sync_all()
         self.nodes[2].generate(1)

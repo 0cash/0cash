@@ -1,4 +1,4 @@
-# BitcoinZ Payment API
+# 0cash Payment API
 
 This document has been relocated to https://zcash.readthedocs.io/en/latest/rtd_pages/payment_api.html
 

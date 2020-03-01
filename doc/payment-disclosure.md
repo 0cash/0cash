@@ -10,11 +10,11 @@ Frequent users of shielded transactions, payment processors, exchanges, block ex
 
 ### Experimental Feature
 
-This is an experimental feature.  Enable it by launching `bitcoinzd` with flags:
+This is an experimental feature.  Enable it by launching `0cashd` with flags:
 
-    bitcoinzd -experimentalfeatures -paymentdisclosure -debug=paymentdisclosure -txindex=1
+    0cashd -experimentalfeatures -paymentdisclosure -debug=paymentdisclosure -txindex=1
 
-These flags can also be set as options in `bitcoinz.conf`.
+These flags can also be set as options in `0cash.conf`.
 
 All nodes that generate or validate payment disclosures must run with `txindex=1` enabled.
 
@@ -50,7 +50,7 @@ To validate a payment disclosure, the following RPC call can be used:
 
 Generate a payment disclosure for the first joinsplit, second output (index starts from zero):
 
-    bitcoinz-cli z_getpaymentdisclosure 79189528d611e811a1c7bb0358dd31343033d14b4c1e998d7c4799c40f8b652b 0 1 "Hello"
+    0cash-cli z_getpaymentdisclosure 79189528d611e811a1c7bb0358dd31343033d14b4c1e998d7c4799c40f8b652b 0 1 "Hello"
     
 This returns a payment disclosure in the form of a hex string:
 
@@ -58,7 +58,7 @@ This returns a payment disclosure in the form of a hex string:
 
 To validate the payment disclosure:
 
-    bitcoinz-cli z_validatepaymentdisclosure HEXDATA
+    0cash-cli z_validatepaymentdisclosure HEXDATA
     
 This returns data related to the payment and the payment disclosure:
 
@@ -88,7 +88,7 @@ For nodes that only validate payment disclosures, no data is stored locally.
 
 For nodes that generate payment disclosures, a LevelDB database is created in the node's datadir.  For most users, this would be in the folder:
 
-    $HOME/.bitcoinz/paymentdisclosure
+    $HOME/.0cash/paymentdisclosure
     
 If you decide you don't want to use payment disclosure, it is safe to shut down your node and delete the database folder.
 

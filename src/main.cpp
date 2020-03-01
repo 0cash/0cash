@@ -45,7 +45,7 @@
 using namespace std;
 
 #if defined(NDEBUG)
-# error "BitcoinZ cannot be compiled without assertions."
+# error "0cash cannot be compiled without assertions."
 #endif
 
 #include "librustzcash.h"
@@ -109,7 +109,7 @@ static void CheckBlockIndex();
 /** Constant stuff for coinbase transactions we create: */
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "BitcoinZ Signed Message:\n";
+const string strMessageMagic = "0cash Signed Message:\n";
 
 // Internal stuff
 namespace {
@@ -1738,7 +1738,10 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex)
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
-    CAmount nSubsidy = 12500 * COIN;
+    if (nHeight == 1)
+	return 401000 * COIN;
+
+    CAmount nSubsidy = 50 * COIN;
 
     // Mining slow start
     // The subsidy is ramped up linearly, skipping the middle payout of
@@ -3288,7 +3291,7 @@ static bool ActivateBestChainStep(CValidationState &state, CBlockIndex *pindexMo
     const CBlockIndex *pindexOldTip = chainActive.Tip();
     const CBlockIndex *pindexFork = chainActive.FindFork(pindexMostWork);
 
-    // On the BitcoinZ network, we will not allow to reach this code
+    // On the 0cash network, we will not allow to reach this code
     // For normal node, do not shutdown, just display error message
     // - On ChainDB initialization, pindexOldTip will be null, so there are no removable blocks.
     // - If pindexMostWork is in a chain that doesn't have the same genesis block as our chain,
@@ -3911,8 +3914,8 @@ bool ContextualCheckBlock(const CBlock& block, CValidationState& state, CBlockIn
     }
 
     // Enforce BIP 34 rule that the coinbase starts with serialized block height.
-    // In BitcoinZ this has been enforced since launch, except that the genesis
-    // block didn't include the height in the coinbase (see BitcoinZ protocol spec
+    // In 0cash this has been enforced since launch, except that the genesis
+    // block didn't include the height in the coinbase (see 0cash protocol spec
     // section '6.8 Bitcoin Improvement Proposals').
     if (nHeight > 50)
     {

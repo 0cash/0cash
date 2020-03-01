@@ -144,7 +144,7 @@ def initialize_chain(test_dir):
         from_dir = os.path.join("cache", "node"+str(i))
         to_dir = os.path.join(test_dir,  "node"+str(i))
         shutil.copytree(from_dir, to_dir)
-        initialize_datadir(test_dir, i) # Overwrite port/rpcport in bitcoinz.conf
+        initialize_datadir(test_dir, i) # Overwrite port/rpcport in 0cash.conf
 
 def initialize_chain_clean(test_dir, num_nodes):
     """

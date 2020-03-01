@@ -312,8 +312,8 @@ def gen_release_notes(release, releasefrom):
 
 @phase('Updating debian changelog.')
 def update_debian_changelog(release):
-    os.environ['DEBEMAIL'] = 'bitcoinzcommunity@gmail.com'
-    os.environ['DEBFULLNAME'] = 'The BitcoinZ Community'
+    os.environ['DEBEMAIL'] = '0cashteam@gmail.com'
+    os.environ['DEBFULLNAME'] = 'The 0cash Community'
     sh_log(
         'debchange',
         '--newversion', release.debversion,

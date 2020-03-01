@@ -1,15 +1,15 @@
-# BitcoinZ
-**Keep running wallet to strengthen the BitcoinZ network. Backup your wallet in many locations & keep your coins wallet offline.**
+# 0cash
+**Keep running wallet to strengthen the 0cash network. Backup your wallet in many locations & keep your coins wallet offline.**
 
 ### Ports:
-- RPC port: 1979
-- P2P port: 1989
+- RPC port: 1837
+- P2P port: 1847
 
 Install
 -----------------
 ### Linux
 
-### [Quick guide for beginners](https://github.com/btcz/bitcoinz/wiki/Quick-guide-for-beginners)
+### [Quick guide for beginners](https://github.com/0cash/0cash/wiki/Quick-guide-for-beginners)
 
 Install required dependencies:
 ```{r, engine='bash'}
@@ -22,9 +22,9 @@ sudo apt-get install \
 Execute the build command:
 ```{r, engine='bash'}
 # Clone Bitcoinz Repository
-git clone https://github.com/btcz/bitcoinz
+git clone https://github.com/0cash/0cash
 # Build
-cd bitcoinz/
+cd 0cash/
 ./zcutil/build.sh -j$(nproc)
 # fetch key
 ./zcutil/fetch-params.sh
@@ -33,27 +33,27 @@ cd bitcoinz/
 Usage:
 ```{r, engine='bash'}
 # Run
-./src/bitcoinzd
+./src/0cashd
 # Test getting information about the network
 cd src/
-./bitcoinz-cli getmininginfo
+./0cash-cli getmininginfo
 # Test creating new transparent address
-./bitcoinz-cli getnewaddress
+./0cash-cli getnewaddress
 # Test creating new private address
-./bitcoinz-cli z_getnewaddress
+./0cash-cli z_getnewaddress
 # Test checking transparent balance
-./bitcoinz-cli getbalance
+./0cash-cli getbalance
 # Test checking total balance 
-./bitcoinz-cli z_gettotalbalance
+./0cash-cli z_gettotalbalance
 # Check all available wallet commands
-./bitcoinz-cli help
+./0cash-cli help
 # Get more info about a single wallet command
-./bitcoinz-cli help "The-command-you-want-to-learn-more-about"
-./bitcoinz-cli help "getbalance"
+./0cash-cli help "The-command-you-want-to-learn-more-about"
+./0cash-cli help "getbalance"
 ```
 
 ### Windows
-The BitcoinZ Windows Command Line Wallet can only be built from ubuntu for now.
+The 0cash Windows Command Line Wallet can only be built from ubuntu for now.
 
 Install required dependencies:
 ```
@@ -73,56 +73,56 @@ Execute the build command:
 
 Build
 ```
-$ docker build -t btcz/bitcoinz .
+$ docker build -t 0cash/0cash .
 ```
 
-Create a data directory on your local drive and create a bitcoinz.conf config file
+Create a data directory on your local drive and create a 0cash.conf config file
 ```
-$ mkdir -p /ops/volumes/bitcoinz/data
-$ touch /ops/volumes/bitcoinz/data/bitcoinz.conf
-$ chown -R 999:999 /ops/volumes/bitcoinz/data
-```
-
-Create bitcoinz.conf config file and run the application
-```
-$ docker run -d --name bitcoinz-node \
-  -v bitcoinz.conf:/bitcoinz/data/bitcoinz.conf \
-  -p 1989:1989 -p 127.0.0.1:1979:1979 \
-  btcz/bitcoinz
+$ mkdir -p /ops/volumes/0cash/data
+$ touch /ops/volumes/0cash/data/0cash.conf
+$ chown -R 999:999 /ops/volumes/0cash/data
 ```
 
-Verify bitcoinz-node is running
+Create 0cash.conf config file and run the application
+```
+$ docker run -d --name 0cash-node \
+  -v 0cash.conf:/0cash/data/0cash.conf \
+  -p 1847:1847 -p 127.0.0.1:1837:1837 \
+  0cash/0cash
+```
+
+Verify 0cash-node is running
 ```
 $ docker ps
 CONTAINER ID        IMAGE                  COMMAND                     CREATED             STATUS              PORTS                                              NAMES
-31868a91456d        btcz/bitcoinz          "bitcoinzd --datadir=..."   2 hours ago         Up 2 hours          127.0.0.1:1979->1979/tcp, 0.0.0.0:1989->1989/tcp   bitcoinz-node
+31868a91456d        0cash/0cash            "0cashd --datadir=..."   2 hours ago         Up 2 hours          127.0.0.1:1837->1837/tcp, 0.0.0.0:1847->1847/tcp   0cash-node
 ```
 
 Follow the logs
 ```
-docker logs -f bitcoinz-node
+docker logs -f 0cash-node
 ```
 
-The cli command is a wrapper to bitcoinz-cli that works with an already running Docker container
+The cli command is a wrapper to 0cash-cli that works with an already running Docker container
 ```
-docker exec -it bitcoinz-node cli help
+docker exec -it 0cash-node cli help
 ```
 
 ## Using a Dockerfile
-If you'd like to have a production btc/bitcoinz image with a pre-baked configuration
+If you'd like to have a production btc/0cash image with a pre-baked configuration
 file, use of a Dockerfile is recommended:
 
 ```
-FROM btcz/bitcoinz
-COPY bitcoinz.conf /bitcoinz/data/bitcoinz.conf
+FROM 0cash/0cash
+COPY 0cash.conf /0cash/data/0cash.conf
 ```
 
-Then, build with `docker build -t my-bitcoinz .` and run.
+Then, build with `docker build -t my-0cash .` and run.
 
 ### Windows
-Windows build is maintained in [bitcoinz-win project](https://github.com/bitcoinz-pod/bitcoinz-win).
+Windows build is maintained in [0cash-win project](https://github.com/0cash/0cash-win).
 
 Security Warnings
 -----------------
 
-**BitcoinZ is experimental and a work-in-progress.** Use at your own risk.
+**0cash is experimental and a work-in-progress.** Use at your own risk.

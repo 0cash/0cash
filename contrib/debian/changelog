@@ -1,17 +1,6 @@
-bitcoinz (2.0.5) stable; urgency=high
+0cash (1.0.0) stable; urgency=high
 
-  * 2.0.5 release.
+  * 1.0.0 release.
 
- -- The BitcoinZ Community <bitcoinzcommunity@gmail.com> Thu, 7 Mar 2019 09:16:09
+ -- 0cash Team <0cashteam@gmail.com> Thu, 13 Feb 2020 00:00:00
 
-bitcoinz (2.0.3) stable; urgency=medium
-
-  * 2.0.3 release.
-
- -- The BitcoinZ Community <bitcoinzcommunity@gmail.com> Thu, 7 Mar 2019 09:16:09
-
-bitcoinz (1.4.0) stable; urgency=high
-
-  * 1.4.0 release.
-
- -- The BitcoinZ Community <bitcoinzcommunity@gmail.com>  Fri, 15 June 2018 00:15:00

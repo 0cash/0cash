@@ -16,14 +16,14 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "BitcoinZ"
-            VALUE "FileDescription",    "bitcoinz-cli (JSON-RPC client for BitcoinZ)"
+            VALUE "CompanyName",        "0cash"
+            VALUE "FileDescription",    "0cash-cli (JSON-RPC client for 0cash)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
-            VALUE "InternalName",       "bitcoinz-cli"
+            VALUE "InternalName",       "0cash-cli"
             VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the MIT software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
-            VALUE "OriginalFilename",   "bitcoinz-cli.exe"
-            VALUE "ProductName",        "bitcoinz-cli"
+            VALUE "OriginalFilename",   "0cash-cli.exe"
+            VALUE "ProductName",        "0cash-cli"
             VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
         END
     END
